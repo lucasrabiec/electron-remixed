@@ -1,6 +1,6 @@
 import type { ActionFunction } from "@remix-run/node";
 import { json, redirect } from "@remix-run/node";
-import {Form, useActionData, useTransition} from "@remix-run/react";
+import { Form, useActionData, useTransition } from "@remix-run/react";
 
 import { db } from "~/utils/db.server";
 import {JokeDisplay} from "~/components/joke";

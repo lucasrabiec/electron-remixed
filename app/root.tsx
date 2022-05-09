@@ -2,7 +2,6 @@ import type { LinksFunction, MetaFunction } from "@remix-run/node"
 import {
   Links,
   LiveReload,
-  Meta,
   Outlet,
   Scripts,
   ScrollRestoration, useCatch,
