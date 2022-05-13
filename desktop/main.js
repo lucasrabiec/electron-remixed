@@ -7,7 +7,13 @@ let win
 
 /** @param {string} url */
 async function createWindow(url) {
-  win = new BrowserWindow({ show: false })
+  win = new BrowserWindow({
+    width: 1280,
+    height: 720,
+    minWidth: 1280,
+    minHeight: 720,
+    show: false
+  })
   await win.loadURL(url)
   win.show()
 

@@ -9,7 +9,7 @@ export function JokeDisplay({ joke, canDelete = true }: {
     <div>
       <p>Here's your hilarious joke:</p>
       <p>{joke.content}</p>
-      <Link to=".">{joke.name} Permalink</Link>
+      <Link to=".">"{joke.name}" Permalink</Link>
       <Form method="post">
         <input
           type="hidden"
