@@ -1,2 +1,3 @@
 import fs from 'fs';
-export { fs }
+import fsPromise from 'fs/promises';
+export { fs, fsPromise }
