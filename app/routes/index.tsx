@@ -19,6 +19,7 @@ export default function Index() {
       <Center flexDir={'column'} gap={4}>
         <Button colorScheme={'orange'} as={NavLink} to={'/jokes'} width={300}>JOKES (remix official example)</Button>
         <Button colorScheme={'orange'} as={NavLink} to={'/files'} width={300}>FILES</Button>
+        <Button colorScheme={'orange'} as={NavLink} to={'/grpc'} width={300}>GRPC</Button>
       </Center>
     </Flex>
   )

@@ -9,8 +9,10 @@
     "dev": "yarn clean && cross-env NODE_ENV=development npm-run-all --parallel --print-label --race dev:*",
     "dev:remix": "remix watch",
     "dev:nodemon": "wait-on file:desktop/main.js && nodemon .",
+    "dev:grpc": "wait-on file:grpc/greeter-server.ts && yarn ts-node grpc/greeter-server.ts",
     "build": "yarn clean && remix build && electron-builder",
-    "start": "cross-env NODE_ENV=production electron ."
+    "start": "cross-env NODE_ENV=production electron .",
+    "predev": "protoc --plugin=./node_modules/.bin/protoc-gen-ts_proto --ts_proto_opt=esModuleInterop=true --ts_proto_out=. grpc/protos/*.proto --ts_proto_opt=outputServices=grpc-js"
   },
   "build": {
     "files": [
@@ -21,15 +23,19 @@
   },
   "dependencies": {
     "@chakra-ui/react": "^1.8.8",
+    "@emotion/cache": "^11.7.1",
     "@emotion/react": "^11",
     "@emotion/server": "^11",
     "@emotion/styled": "^11",
+    "@grpc/grpc-js": "^1.6.7",
     "@prisma/client": "^3.13.0",
     "@remix-run/node": "^1.4.3",
     "@remix-run/react": "^1.4.3",
     "@remix-run/server-runtime": "^1.4.3",
     "fast-glob": "^3.2.11",
     "framer-motion": "^6",
+    "long": "^5.2.0",
+    "protobufjs": "^6.11.2",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
     "remix-electron": "^1.2.2",
@@ -49,6 +55,7 @@
     "npm-run-all": "^4.1.5",
     "prisma": "^3.13.0",
     "ts-node": "^10.7.0",
+    "ts-proto": "^1.112.1",
     "typescript": "^4.6.3",
     "wait-on": "^6.0.1"
   },
