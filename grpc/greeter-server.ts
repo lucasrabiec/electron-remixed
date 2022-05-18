@@ -1,20 +1,23 @@
-import { Server, ServerCredentials } from '@grpc/grpc-js';
-import { GreeterService, GreeterServer } from "./protos/hello-world";
+import { createServer } from "nice-grpc";
+import {
+  DeepPartial,
+  GreeterDefinition,
+  GreeterServiceImplementation,
+  HelloReply,
+  HelloRequest
+} from "./gen_proto/hello-world";
 
-function sayHello(call: any, callback: any) {
-  const reply = { message: `Hello ${call.request.name}` };
-  callback(null, reply);
-}
-
-function main() {
-  const server = new Server();
-  const impl: GreeterServer = {
-    sayHello: sayHello
+const impl: GreeterServiceImplementation = {
+  async sayHello(request: HelloRequest): Promise<DeepPartial<HelloReply>> {
+    return { message: `Hello ${request.name}` }
   }
-  server.addService(GreeterService, impl);
-  server.bindAsync('0.0.0.0:50051', ServerCredentials.createInsecure(), () => {
-    server.start();
-  });
 }
 
-main();
+async function main() {
+  const server = createServer();
+
+  server.add(GreeterDefinition, impl);
+  await server.listen('0.0.0.0:50051')
+}
+
+main().then(() => {});

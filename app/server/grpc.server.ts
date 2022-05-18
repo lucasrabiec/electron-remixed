@@ -1,15 +1,9 @@
-import { credentials } from '@grpc/grpc-js';
-import { GreeterClient } from "../../grpc/protos/hello-world";
+import { createChannel, createClient } from "nice-grpc";
+import { GreeterClient, GreeterDefinition } from "../../grpc/gen_proto/hello-world";
 
-const client = new GreeterClient('0.0.0.0:50051', credentials.createInsecure());
+const channel = createChannel('localhost:50051');
 
-export const sendGreetings = (name: string) => {
-  return new Promise((resolve, reject) => {
-    client.sayHello({name}, (err, response) => {
-      if (err) {
-        reject(err);
-      }
-      resolve(response);
-    });
-  });
-}
+export const client: GreeterClient = createClient(
+  GreeterDefinition,
+  channel,
+);

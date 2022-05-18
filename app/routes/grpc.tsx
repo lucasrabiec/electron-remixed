@@ -1,10 +1,10 @@
 import { Flex, Heading, Text } from "@chakra-ui/react";
 import { json, LoaderFunction } from "@remix-run/node";
-import { sendGreetings } from "~/server/grpc.server";
 import { Link, useLoaderData } from "@remix-run/react";
+import { client } from "~/server/grpc.server";
 
 export const loader: LoaderFunction = async () => {
-  const response = await sendGreetings('Lucas');
+  const response = await client.sayHello({ name: 'Lucas' });
 
   return json(response);
 }

@@ -12,7 +12,7 @@
     "dev:grpc": "wait-on file:grpc/greeter-server.ts && yarn ts-node grpc/greeter-server.ts",
     "build": "yarn clean && remix build && electron-builder",
     "start": "cross-env NODE_ENV=production electron .",
-    "predev": "protoc --plugin=./node_modules/.bin/protoc-gen-ts_proto --ts_proto_opt=esModuleInterop=true --ts_proto_out=. grpc/protos/*.proto --ts_proto_opt=outputServices=grpc-js"
+    "predev": "protoc --proto_path=./grpc/proto --plugin=./node_modules/.bin/protoc-gen-ts_proto --ts_proto_opt=outputServices=nice-grpc,outputServices=generic-definitions,useExactTypes=false,esModuleInterop=true --ts_proto_out=./grpc/gen_proto ./grpc/proto/*.proto"
   },
   "build": {
     "files": [
@@ -35,6 +35,7 @@
     "fast-glob": "^3.2.11",
     "framer-motion": "^6",
     "long": "^5.2.0",
+    "nice-grpc": "^1.2.0",
     "protobufjs": "^6.11.2",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
