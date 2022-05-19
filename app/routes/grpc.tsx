@@ -4,9 +4,13 @@ import { Link, useLoaderData } from "@remix-run/react";
 import { client } from "~/server/grpc.server";
 
 export const loader: LoaderFunction = async () => {
-  const response = await client.sayHello({ name: 'Lucas' });
+  const { message } = await client.sayHello({ name: 'Lucas' });
+  let counter = '';
+  for await (const response of client.serverCounter({ countRange: 10 })) {
+    counter += `${response.counter} `
+  }
 
-  return json(response);
+  return json({message, counter});
 }
 
 export default function GrpcRoute() {
@@ -16,6 +20,7 @@ export default function GrpcRoute() {
     <Flex p={4} gap={4} h='100vh' flexDir='column'>
       <Link to='/'><Heading>GRPC</Heading></Link>
       <Text>Message: {response.message}</Text>
+      <Text>Counter: {response.counter}</Text>
     </Flex>
   )
 }

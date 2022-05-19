@@ -1,15 +1,24 @@
+import { range } from "ix/asynciterable";
 import { createServer } from "nice-grpc";
 import {
+  CountReply,
   DeepPartial,
   GreeterDefinition,
   GreeterServiceImplementation,
   HelloReply,
-  HelloRequest
 } from "./gen_proto/hello-world";
+import { map, withAbort } from "ix/asynciterable/operators";
 
 const impl: GreeterServiceImplementation = {
-  async sayHello(request: HelloRequest): Promise<DeepPartial<HelloReply>> {
+  async sayHello(request): Promise<DeepPartial<HelloReply>> {
     return { message: `Hello ${request.name}` }
+  },
+
+  async *serverCounter(request, context): AsyncIterable<DeepPartial<CountReply>> {
+    yield* range(0, request.countRange).pipe(
+      withAbort(context.signal),
+      map((current) => ({ counter: current }))
+    )
   }
 }
 

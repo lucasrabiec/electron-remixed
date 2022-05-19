@@ -2,6 +2,7 @@ syntax = 'proto3';
 
 service Greeter {
   rpc SayHello (HelloRequest) returns (HelloReply) {}
+  rpc ServerCounter (CountRequest) returns (stream CountReply) {}
 }
 
 message HelloRequest {
@@ -10,4 +11,12 @@ message HelloRequest {
 
 message HelloReply {
   string message = 1;
+}
+
+message CountRequest {
+  int32 countRange = 1;
+}
+
+message CountReply {
+  int32 counter = 1;
 }
